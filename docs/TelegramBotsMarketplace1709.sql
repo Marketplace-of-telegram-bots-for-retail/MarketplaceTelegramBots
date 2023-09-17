@@ -11,6 +11,7 @@ CREATE TABLE "users"."user" (
   "phone" varchar,
   "is_bayer" bool DEFAULT False,
   "is_seller" bool DEFAULT False,
+  "shop_name" varchar,
   "favorites" int,
   "is_active" bool,
   "created_at" timestamp,
@@ -63,7 +64,7 @@ CREATE TABLE "marketplace"."shopping_cart" (
 CREATE TABLE "marketplace"."order" (
   "id" int PRIMARY KEY,
   "user_id" int,
-  "prduct_list" int,
+  "product_list_id" int,
   "is_paid" bool,
   "sale_status" bool DEFAULT False,
   "is_active" bool,
@@ -104,6 +105,6 @@ ALTER TABLE "marketplace"."review_rating" ADD FOREIGN KEY ("user_id") REFERENCES
 
 ALTER TABLE "marketplace"."review_rating" ADD FOREIGN KEY ("product_id") REFERENCES "marketplace"."product" ("id");
 
-ALTER TABLE "marketplace"."order_product_list" ADD FOREIGN KEY ("order_id") REFERENCES "marketplace"."order" ("id");
+ALTER TABLE "marketplace"."order_product_list" ADD FOREIGN KEY ("order_id") REFERENCES "marketplace"."order" ("product_list_id");
 
 ALTER TABLE "marketplace"."order_product_list" ADD FOREIGN KEY ("product_id") REFERENCES "marketplace"."product" ("id");
