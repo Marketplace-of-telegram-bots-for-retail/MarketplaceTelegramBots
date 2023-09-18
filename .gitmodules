@@ -1,6 +1,8 @@
 [submodule "backend"]
 	path = backend
 	url = git@github.com:Marketplace-of-telegram-bots-for-retail/backend.git
+	branch = main
 [submodule "frontend"]
 	path = frontend
 	url = git@github.com:Marketplace-of-telegram-bots-for-retail/frontend.git
+	branch = main
