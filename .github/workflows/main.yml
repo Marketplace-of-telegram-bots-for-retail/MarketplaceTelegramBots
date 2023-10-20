@@ -153,6 +153,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd marketplace
+            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker system prune -af
             echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose pull
             echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose down
             echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose up -d
