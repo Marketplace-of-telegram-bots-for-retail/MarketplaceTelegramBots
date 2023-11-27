@@ -142,6 +142,7 @@ jobs:
           host: ${{ secrets.HOST_BUGATON1 }}
           username: ${{ secrets.USER_BUGATON }}
           key: ${{ secrets.SSH_KEY_BUGATON }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE_BUGATON }}
           source: "docker-compose.yml"
           target: "marketplace"
 
@@ -151,6 +152,7 @@ jobs:
           host: ${{ secrets.HOST_BUGATON1 }}
           username: ${{ secrets.USER_BUGATON }}
           key: ${{ secrets.SSH_KEY_BUGATON }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE_BUGATON }}
           script: |
             cd marketplace
             echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker system prune -af
