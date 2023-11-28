@@ -178,27 +178,10 @@ jobs:
 #            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend python manage.py collectstatic
 #            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend cp -r /app/collected_static/. /backend_static/static/
 
-      - name: Executing remote ssh commands to deploy to bugaton2 server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST_BUGATON2 }}
-          username: ${{ secrets.USER_BUGATON }}
-          key: ${{ secrets.SSH_KEY_BUGATON }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE_BUGATON }}
-          script: |
-            cd marketplace
-            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker system prune -af
-            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose pull
-            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose down
-            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose up -d
-            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend python manage.py migrate
-            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend python manage.py collectstatic
-            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend cp -r /app/collected_static/. /backend_static/static/
-#
-#      - name: Executing remote ssh commands to deploy to bugaton3 server
+#      - name: Executing remote ssh commands to deploy to bugaton2 server
 #        uses: appleboy/ssh-action@master
 #        with:
-#          host: ${{ secrets.HOST_BUGATON3 }}
+#          host: ${{ secrets.HOST_BUGATON2 }}
 #          username: ${{ secrets.USER_BUGATON }}
 #          key: ${{ secrets.SSH_KEY_BUGATON }}
 #          passphrase: ${{ secrets.SSH_PASSPHRASE_BUGATON }}
@@ -211,6 +194,23 @@ jobs:
 #            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend python manage.py migrate
 #            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend python manage.py collectstatic
 #            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend cp -r /app/collected_static/. /backend_static/static/
+#
+      - name: Executing remote ssh commands to deploy to bugaton3 server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_BUGATON3 }}
+          username: ${{ secrets.USER_BUGATON }}
+          key: ${{ secrets.SSH_KEY_BUGATON }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE_BUGATON }}
+          script: |
+            cd marketplace
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker system prune -af
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose pull
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose down
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose up -d
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend python manage.py migrate
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend python manage.py collectstatic
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend cp -r /app/collected_static/. /backend_static/static/
 #
 #      - name: Executing remote ssh commands to deploy to bugaton4 server
 #        uses: appleboy/ssh-action@master
