@@ -145,19 +145,35 @@ jobs:
           source: "docker-compose.yml"
           target: "marketplace"
 
-      - name: Executing remote ssh commands to deploy to main server
+#      - name: Executing remote ssh commands to deploy to main server
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USER }}
+#          key: ${{ secrets.SSH_KEY }}
+#          script: |
+#            cd marketplace
+#            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker system prune -af
+#            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose pull
+#            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose down
+#            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose up -d
+#            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose exec backend python manage.py migrate
+#            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose exec backend python manage.py collectstatic
+#            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose exec backend cp -r /app/collected_static/. /backend_static/static/
+
+      - name: Executing remote ssh commands to deploy to bugaton4 server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.HOST_BUGATON4 }}
+          username: ${{ secrets.USER_BUGATON }}
+          key: ${{ secrets.SSH_KEY_BUGATON }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE_BUGATON }}
           script: |
             cd marketplace
-            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker system prune -af
-            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose pull
-            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose down
-            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose up -d
-            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose exec backend python manage.py migrate
-            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose exec backend python manage.py collectstatic
-            echo ${{ secrets.SSH_PASSPHRASE }} | sudo -S docker compose exec backend cp -r /app/collected_static/. /backend_static/static/
-
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker system prune -af
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose pull
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose down
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose up -d
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend python manage.py migrate
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend python manage.py collectstatic
+            echo ${{ secrets.SSH_PASSPHRASE_BUGATON }} | sudo -S docker compose exec backend cp -r /app/collected_static/. /backend_static/static/
