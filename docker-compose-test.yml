@@ -17,7 +17,7 @@ services:
       timeout: 5s
       retries: 5
   backend:
-    image: telegrambotsmarketplace/marketplace_backend
+    image: telegrambotsmarketplace/marketplace_backend:test
     env_file: .env
     depends_on:
       - postgres
@@ -25,16 +25,25 @@ services:
       - static:/backend_static
       - media:/app/media
   frontend:
-    image: telegrambotsmarketplace/marketplace_frontend
+    image: telegrambotsmarketplace/marketplace_frontend:test
     env_file: .env
     command: cp -r /app/build/. /frontend_static/
     volumes:
       - static:/frontend_static
   nginx:
-    image: telegrambotsmarketplace/marketplace_nginx
+    image: telegrambotsmarketplace/marketplace_nginx:test
     env_file: .env
     ports:
       - 80:80
+      - 443:443
+    restart: always
     volumes:
       - static:/static
       - media:/app/media
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
