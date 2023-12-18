@@ -3,8 +3,8 @@ name: Main workflow
 on:
   push:
     branches:
-      - main
-      - !test/**
+      - 'main'
+      - '!test/**'
 
 jobs:
   tests:
