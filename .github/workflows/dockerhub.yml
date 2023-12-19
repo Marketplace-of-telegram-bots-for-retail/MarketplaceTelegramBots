@@ -13,7 +13,6 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Push backend Docker image to DockerHub
     runs-on: ubuntu-latest
-    needs: tests
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
