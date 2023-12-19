@@ -1,0 +1,49 @@
+name: Backend test
+
+on: push
+
+jobs:
+  tests:
+    name: Running backend tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres_user
+          POSTGRES_PASSWORD: postgres_password
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.12
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip 
+          pip install flake8==6.0.0
+          pip install -r ./backend/requirements.txt 
+
+      - name: Test with flake8 tests
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres_user
+          POSTGRES_PASSWORD: postgres_password
+          DB_HOST: localhost
+          DB_PORT: 5432
+          SECRET_KEY: some-test-key
+          DEBUG: False
+          ALLOWED_HOSTS: 127.0.0.1,localhost
+        run: |
+          cd backend
+          python -m flake8 backend/
