@@ -2,7 +2,7 @@ name: Develop deploy
 
 on:
   workflow_run:
-    workflows: ['Backend test', 'Push to docker hub']
+    workflows: ['Push to docker hub']
     types:
       - completed
     branches:
