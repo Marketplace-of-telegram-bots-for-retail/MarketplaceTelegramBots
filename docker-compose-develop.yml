@@ -17,7 +17,7 @@ services:
       timeout: 5s
       retries: 5
   backend:
-    image: telegrambotsmarketplace/marketplace_backend
+    image: telegrambotsmarketplace/marketplace_backend:develop
     env_file: .env
     depends_on:
       - postgres
@@ -25,7 +25,7 @@ services:
       - static:/backend_static
       - media:/app/media
   frontend:
-    image: telegrambotsmarketplace/marketplace_frontend
+    image: telegrambotsmarketplace/marketplace_frontend:develop
     env_file: .env
     command: cp -r /app/build/. /frontend_static/
     volumes:
